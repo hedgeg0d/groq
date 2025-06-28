@@ -1,12 +1,10 @@
 package groq
 
-type ChatCompletionRequest struct {
-	Model       string    `json:"model"`
-	Messages    []Message `json:"messages"`
-	Stream      bool      `json:"stream,omitempty"`
-	Temperature float64   `json:"temperature,omitempty"`
-	MaxTokens   int       `json:"max_tokens,omitempty"`
-	TopP        float64   `json:"top_p,omitempty"`
+type QueryParameters struct {
+	MaxTokens    int     `json:"max_tokens,omitempty"`
+	Temperature  float64 `json:"temperature,omitempty"`
+	TopP         float64 `json:"top_p,omitempty"`
+	SystemPrompt string  `json:"system_prompt,omitempty"`
 }
 
 type Message struct {
@@ -14,23 +12,31 @@ type Message struct {
 	Content string `json:"content"`
 }
 
-type ChatCompletionResponse struct {
-	ID      string   `json:"id"`
-	Object  string   `json:"object"`
-	Created int64    `json:"created"`
-	Model   string   `json:"model"`
-	Choices []Choice `json:"choices"`
-	Usage   Usage    `json:"usage"`
+type ChatCompletionRequest struct {
+	Model       string    `json:"model"`
+	Messages    []Message `json:"messages"`
+	MaxTokens   int       `json:"max_tokens,omitempty"`
+	Temperature float64   `json:"temperature,omitempty"`
+	TopP        float64   `json:"top_p,omitempty"`
+	Stream      bool      `json:"stream,omitempty"`
 }
 
 type Choice struct {
-	Index        int     `json:"index"`
-	Message      Message `json:"message"`
-	FinishReason string  `json:"finish_reason"`
+	Message Message `json:"message"`
 }
 
-type Usage struct {
-	PromptTokens     int `json:"prompt_tokens"`
-	CompletionTokens int `json:"completion_tokens"`
-	TotalTokens      int `json:"total_tokens"`
+type ChatCompletionResponse struct {
+	Choices []Choice `json:"choices"`
+}
+
+type Delta struct {
+	Content string `json:"content"`
+}
+
+type StreamChoice struct {
+	Delta Delta `json:"delta"`
+}
+
+type ChatCompletionStreamResponse struct {
+	Choices []StreamChoice `json:"choices"`
 }

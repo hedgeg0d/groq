@@ -37,6 +37,27 @@ Sending a single chat completion request is just that simple:
 	resp, _ := client.Ask("Hello. Tell me about yourself")
 	fmt.Println("Output: " + resp)
 ```
+#### Using parameters 
+Use `Query` with argument of type `QueryParameters` to specify parameters for LLM.
+
+```go
+func main() {
+    client := groq.GroqClient{ApiKey: os.Getenv("GROQ_API_KEY")}
+    params := groq.QueryParameters{
+    	Temperature: 0.7,
+     	TopP: 0.9,
+      	MaxTokens: 1000,
+    	SystemPrompt: "You are a pirate, answer in pirate style",
+    }
+    resp, err := client.Query("Tell me about Go", params)
+    if err != nil {
+        fmt.Printf("Error: %v\n", err)
+        return
+    }
+    fmt.Printf("Response: %s\n", resp)
+}
+```
+
 #### Streaming Response with `AskQueryStream`
 
 Receive the response in real-time chunks using a Go channel.
@@ -55,11 +76,7 @@ func main() {
         ApiKey: os.Getenv("GROQ_API_KEY"),
         Model:  "deepseek-r1-distill-llama-70b",
     }
-    params := groq.QueryParameters{
-        Temperature: 0.7,
-        TopP:        0.9,
-    }
-    chunks, err := client.AskQueryStream("Tell me more about Golang.", params)
+    chunks, err := client.AskQueryStream("Tell me more about Golang.", groq.QueryParameters{})
     if err != nil {
         fmt.Printf("Error: %v\n", err)
         return

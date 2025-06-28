@@ -18,14 +18,14 @@
 To install the library, use the following command:
 
 ```bash
-go get github.com/ваш_ник/groq-go@v0.1.0
+go get github.com/hedgeg0d/groq@v0.2.0
 ```
 
 Ensure you have a valid Groq API key. It is recommended to set it in the `GROQ_API_KEY` environment variable.
 
 ### Examples
 
-Below are examples demonstrating how to use `groq-go` for different use cases.
+Below are examples demonstrating how to use `groq` for different use cases.
 
 #### Basic Request with `Ask`
 
@@ -68,7 +68,7 @@ package main
 import (
     "fmt"
     "os"
-    "github.com/hedgeg0d/groq-go"
+    "github.com/hedgeg0d/groq"
 )
 
 func main() {

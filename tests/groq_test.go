@@ -1,4 +1,4 @@
-package groq
+package test
 
 import (
 	"github.com/hedgeg0d/groq"

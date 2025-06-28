@@ -32,16 +32,10 @@ Below are examples demonstrating how to use `groq-go` for different use cases.
 Sending a single chat completion request is just that simple:
 
 ```go
-func main() {
-    client := &groq.GroqClient{ApiKey: os.Getenv("GROQ_API_KEY")}
-    // by default uses llama-3.1-8b-instant
-    resp, err := client.Ask("Why is the sky blue?")
-    if err != nil {
-        fmt.Printf("Error: %v\n", err)
-        return
-    }
-    fmt.Printf("Response: %s\n", resp)
-}
+	client := groq.GroqClient{ApiKey: os.Getenv("GROQ_API_KEY")}
+	// uses llama-3.1-8b-instant by default, as the fastest model
+	resp, _ := client.Ask("Hello. Tell me about yourself")
+	fmt.Println("Output: " + resp)
 ```
 #### Streaming Response with `AskQueryStream`
 
@@ -59,7 +53,7 @@ import (
 func main() {
     client := &groq.GroqClient{
         ApiKey: os.Getenv("GROQ_API_KEY"),
-        Model:  "llama-3.1-8b-instant",
+        Model:  "deepseek-r1-distill-llama-70b",
     }
     params := groq.QueryParameters{
         Temperature: 0.7,

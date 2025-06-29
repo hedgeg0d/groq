@@ -40,3 +40,19 @@ type StreamChoice struct {
 type ChatCompletionStreamResponse struct {
 	Choices []StreamChoice `json:"choices"`
 }
+
+type SpeechParameters struct {
+    Voice          string `json:"voice,omitempty"`
+    ResponseFormat string `json:"response_format,omitempty"`
+}
+
+type SpeechRequest struct {
+    Model          string `json:"model"`
+    Input          string `json:"input"`
+    Voice          string `json:"voice"`
+    ResponseFormat string `json:"response_format"`
+}
+
+type SpeechResponse struct {
+    Audio []byte `json:"audio"`
+}

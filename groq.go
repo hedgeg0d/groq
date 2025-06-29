@@ -12,6 +12,9 @@ type GroqClient struct {
 }
 
 const DEFAULT_MODEL = "llama-3.1-8b-instant"
+const DEFAULT_TTS_MODEL = "playai-tts"
+const DEFAULT_TTS_VOICE = "Fritz-PlayAI"
+const DEFAULT_TTS_FORMAT = "wav"
 
 func (client *GroqClient) buildQueryRequest(query string, params QueryParameters) (ChatCompletionRequest, error) {
 	if client.ApiKey == "" {
@@ -39,6 +42,27 @@ func (client *GroqClient) buildQueryRequest(query string, params QueryParameters
 		req.TopP = params.TopP
 	}
 	return req, nil
+}
+
+func (client *GroqClient) buildSpeechRequest(text string, params SpeechParameters) (SpeechRequest, error) {
+    if client.ApiKey == "" {
+        return SpeechRequest{}, errors.New("API key is not specified")
+    }
+    model := DEFAULT_TTS_MODEL
+    voice := DEFAULT_TTS_VOICE
+    responseFormat := DEFAULT_TTS_FORMAT
+    if params.Voice != "" {
+        voice = params.Voice
+    }
+    if params.ResponseFormat != "" {
+        responseFormat = params.ResponseFormat
+    }
+    return SpeechRequest{
+        Model:          model,
+        Input:          text,
+        Voice:          voice,
+        ResponseFormat: responseFormat,
+    }, nil
 }
 
 func (client *GroqClient) Ask(query string) (string, error) {
@@ -73,6 +97,19 @@ func (client *GroqClient) AskQueryStream(query string, params QueryParameters) (
 	}
 	client.RequestsCount++
 	return chunks, nil
+}
+
+func (client *GroqClient) CreateSpeech(text string, params SpeechParameters) ([]byte, error) {
+    req, err := client.buildSpeechRequest(text, params)
+    if err != nil {
+        return nil, err
+    }
+    audio, err := createSpeech(req, client.ApiKey)
+    if err != nil {
+        return nil, err
+    }
+    client.RequestsCount++
+    return audio, nil
 }
 
 func (client *GroqClient) GetRequestsCount() int {

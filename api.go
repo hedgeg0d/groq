@@ -10,7 +10,7 @@ import (
 	"io"
 )
 
-func createChatCompletion(req ChatCompletionRequest, apiKey string) (*ChatCompletionResponse, error) {
+func createChatCompletion(req chatCompletionRequest, apiKey string) (*chatCompletionResponse, error) {
 	url := "https://api.groq.com/openai/v1/chat/completions"
 	reqBody, err := json.Marshal(req)
 	if err != nil {
@@ -34,14 +34,14 @@ func createChatCompletion(req ChatCompletionRequest, apiKey string) (*ChatComple
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
-	var chatResp ChatCompletionResponse
+	var chatResp chatCompletionResponse
 	if err := json.NewDecoder(resp.Body).Decode(&chatResp); err != nil {
 		return nil, err
 	}
 	return &chatResp, nil
 }
 
-func createChatCompletionStream(req ChatCompletionRequest, apiKey string) (chan string, error) {
+func createChatCompletionStream(req chatCompletionRequest, apiKey string) (chan string, error) {
 	req.Stream = true
 	url := "https://api.groq.com/openai/v1/chat/completions"
 	reqBody, err := json.Marshal(req)
@@ -104,7 +104,7 @@ func createChatCompletionStream(req ChatCompletionRequest, apiKey string) (chan 
 	return chunks, nil
 }
 
-func createSpeech(req SpeechRequest, apiKey string) ([]byte, error) {
+func createSpeech(req speechRequest, apiKey string) ([]byte, error) {
     url := "https://api.groq.com/openai/v1/audio/speech"
     reqBody, err := json.Marshal(req)
     if err != nil {

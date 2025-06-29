@@ -18,7 +18,7 @@
 To install the library, use the following command:
 
 ```bash
-go get github.com/hedgeg0d/groq@v0.2.0
+go get github.com/hedgeg0d/groq@v0.3.1
 ```
 
 Ensure you have a valid Groq API key. It is recommended to set it in the `GROQ_API_KEY` environment variable.

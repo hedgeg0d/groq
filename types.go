@@ -7,38 +7,38 @@ type QueryParameters struct {
 	SystemPrompt string  `json:"system_prompt,omitempty"`
 }
 
-type Message struct {
+type message struct {
 	Role    string `json:"role"`
 	Content string `json:"content"`
 }
 
-type ChatCompletionRequest struct {
+type chatCompletionRequest struct {
 	Model       string    `json:"model"`
-	Messages    []Message `json:"messages"`
+	Messages    []message `json:"messages"`
 	MaxTokens   int       `json:"max_tokens,omitempty"`
 	Temperature float64   `json:"temperature,omitempty"`
 	TopP        float64   `json:"top_p,omitempty"`
 	Stream      bool      `json:"stream,omitempty"`
 }
 
-type Choice struct {
-	Message Message `json:"message"`
+type choice struct {
+	Message message `json:"message"`
 }
 
-type ChatCompletionResponse struct {
-	Choices []Choice `json:"choices"`
+type chatCompletionResponse struct {
+	Choices []choice `json:"choices"`
 }
 
-type Delta struct {
+type delta struct {
 	Content string `json:"content"`
 }
 
-type StreamChoice struct {
-	Delta Delta `json:"delta"`
+type streamChoice struct {
+	Delta delta `json:"delta"`
 }
 
-type ChatCompletionStreamResponse struct {
-	Choices []StreamChoice `json:"choices"`
+type chatCompletionStreamResponse struct {
+	Choices []streamChoice `json:"choices"`
 }
 
 type SpeechParameters struct {
@@ -46,13 +46,13 @@ type SpeechParameters struct {
     ResponseFormat string `json:"response_format,omitempty"`
 }
 
-type SpeechRequest struct {
+type speechRequest struct {
     Model          string `json:"model"`
     Input          string `json:"input"`
     Voice          string `json:"voice"`
     ResponseFormat string `json:"response_format"`
 }
 
-type SpeechResponse struct {
+type speechResponse struct {
     Audio []byte `json:"audio"`
 }

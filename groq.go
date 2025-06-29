@@ -11,27 +11,27 @@ type GroqClient struct {
 	RequestsCount int
 }
 
-const DEFAULT_MODEL = "llama-3.1-8b-instant"
-const DEFAULT_TTS_MODEL = "playai-tts"
-const DEFAULT_TTS_VOICE = "Fritz-PlayAI"
-const DEFAULT_TTS_FORMAT = "wav"
+const default_model = "llama-3.1-8b-instant"
+const default_tts_model = "playai-tts"
+const default_tts_voice = "Fritz-PlayAI"
+const default_tts_format = "wav"
 
-func (client *GroqClient) buildQueryRequest(query string, params QueryParameters) (ChatCompletionRequest, error) {
+func (client *GroqClient) buildQueryRequest(query string, params QueryParameters) (chatCompletionRequest, error) {
 	if client.ApiKey == "" {
-		return ChatCompletionRequest{}, errors.New("API key is not specified")
+		return chatCompletionRequest{}, errors.New("API key is not specified")
 	}
 	if client.Model == "" {
-		fmt.Println("Model is not specified. Defaulting to `" + DEFAULT_MODEL + "`")
-		client.Model = DEFAULT_MODEL
+		fmt.Println("Model is not specified. Defaulting to `" + default_model + "`")
+		client.Model = default_model
 	}
-	req := ChatCompletionRequest{
+	req := chatCompletionRequest{
 		Model:    client.Model,
-		Messages: []Message{},
+		Messages: []message{},
 	}
 	if params.SystemPrompt != "" {
-		req.Messages = append(req.Messages, Message{Role: "system", Content: params.SystemPrompt})
+		req.Messages = append(req.Messages, message{Role: "system", Content: params.SystemPrompt})
 	}
-	req.Messages = append(req.Messages, Message{Role: "user", Content: query})
+	req.Messages = append(req.Messages, message{Role: "user", Content: query})
 	if params.MaxTokens != 0 {
 		req.MaxTokens = params.MaxTokens
 	}
@@ -44,20 +44,20 @@ func (client *GroqClient) buildQueryRequest(query string, params QueryParameters
 	return req, nil
 }
 
-func (client *GroqClient) buildSpeechRequest(text string, params SpeechParameters) (SpeechRequest, error) {
+func (client *GroqClient) buildSpeechRequest(text string, params SpeechParameters) (speechRequest, error) {
     if client.ApiKey == "" {
-        return SpeechRequest{}, errors.New("API key is not specified")
+        return speechRequest{}, errors.New("API key is not specified")
     }
-    model := DEFAULT_TTS_MODEL
-    voice := DEFAULT_TTS_VOICE
-    responseFormat := DEFAULT_TTS_FORMAT
+    model := default_tts_model
+    voice := default_tts_voice
+    responseFormat := default_tts_format
     if params.Voice != "" {
         voice = params.Voice
     }
     if params.ResponseFormat != "" {
         responseFormat = params.ResponseFormat
     }
-    return SpeechRequest{
+    return speechRequest{
         Model:          model,
         Input:          text,
         Voice:          voice,

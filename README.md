@@ -1,4 +1,3 @@
-
 # [Groq](https://console.groq.com/home) API Library for Go
 
 ### Description
@@ -18,7 +17,7 @@
 To install the library, use the following command:
 
 ```bash
-go get github.com/hedgeg0d/groq@v0.3.1
+go get github.com/hedgeg0d/groq@v0.4
 ```
 
 Ensure you have a valid Groq API key. It is recommended to set it in the `GROQ_API_KEY` environment variable.
@@ -93,6 +92,24 @@ func main() {
 ```
 For more examples, please, check the `examples` folder.
 
+#### Audio Transcription
+
+Transcribe an audio file into text. The language will be auto-detected if not specified.
+
+```go
+func main() {
+    client := groq.GroqClient{ApiKey: os.Getenv("GROQ_API_KEY")}
+    audioData, _ := os.ReadFile("speech.wav")
+    // Parameters are optional, may be empty
+    params := groq.TranscriptionParameters{
+        Language: "en", // e.g., "en", "es", "fr"
+    }
+    
+    text, _ := client.CreateTranscription(audioData, params)
+    fmt.Println(text)
+}
+```
+
 #### Text-To-Speech Queries 
 
 **DISCLAIMER!** To use this feature, you have to consent the terms of use at [groq website](https://console.groq.com/playground?model=playai-tts)
@@ -123,4 +140,3 @@ This library is actively being developed. Planned features include:
 -   Additional endpoints, such as listing available models (`/models`).
 -   More example use cases and documentation.
 -   More tests
-

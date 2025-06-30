@@ -42,17 +42,27 @@ type chatCompletionStreamResponse struct {
 }
 
 type SpeechParameters struct {
-    Voice          string `json:"voice,omitempty"`
-    ResponseFormat string `json:"response_format,omitempty"`
+	Voice          string `json:"voice,omitempty"`
+	ResponseFormat string `json:"response_format,omitempty"`
 }
 
 type speechRequest struct {
-    Model          string `json:"model"`
-    Input          string `json:"input"`
-    Voice          string `json:"voice"`
-    ResponseFormat string `json:"response_format"`
+	Model          string `json:"model"`
+	Input          string `json:"input"`
+	Voice          string `json:"voice"`
+	ResponseFormat string `json:"response_format"`
 }
 
 type speechResponse struct {
-    Audio []byte `json:"audio"`
+	Audio []byte `json:"audio"`
+}
+
+type TranscriptionParameters struct {
+	Language    string  `json:"language,omitempty"`
+	Prompt      string  `json:"prompt,omitempty"`
+	Temperature float64 `json:"temperature,omitempty"`
+}
+
+type transcriptionResponse struct {
+	Text string `json:"text"`
 }
